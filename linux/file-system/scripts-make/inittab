@@ -1,0 +1,18 @@
+#/etc/inittab
+
+# /etc/inittab 文件中每个条目用来定义一个子进程，并确定它的启动方法，格式如下
+#      <id>:<runlevels>:<action>:<process>
+# <id>: 表示此进程要使用的控制台(即标准输入,标准输出,标准错误设备); 如果省略,则使用与init进程一样的控制台
+# <runlevels>:对于Busybox init程序，这个字段无意义，可以省略。
+# <action>:表示init程序如何控制这个子进程
+# <process>: 要执行的程序，它可以是可执行程序，也可以是脚本
+
+# 启动系统初始化文件/etc/init.d/rcS;
+::sysinit:/etc/init.d/rcS
+# 在串口ttySAC0启动askfirst动作的shell, 用户将在此串口通过此shell与linux进行交互;
+ttySAC0::askfirst:-/bin/sh
+# 当按下Ctrl+Alt+Delete组合键时，init重启执行程序。字段ctrlaltdel表明当按下Ctrl+Alt+Delete组合键时，执行相应的进程。
+::ctrlaltdel:/sbin/reboot
+# 告诉init在关机时运行umount命令卸载所有的文件系统，如果卸载失败，试图以只读方式重新挂载。
+# 字段shutdown表明在重启关闭系统命令时执行相应进程。
+::shutdown:/bin/umount -a -r

@@ -1,0 +1,7 @@
+ulimit -S -c 0 > /dev/null 2>&1
+USER="`id -un`"
+LOGNAME=$USER
+PS1='[\u@\h\W]# '
+PATH=$PATH
+HOSTNAME=`/bin/hostname`
+export USER LOGNAME PS1 PATH
