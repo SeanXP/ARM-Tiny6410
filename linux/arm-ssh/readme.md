@@ -11,14 +11,15 @@
 
 参考博客：[移植SSH到ARM Linux开发板成功（标准步骤）](http://blog.sina.com.cn/s/blog_7f2a9a390100xws4.html)
 
-###1. 下载源代码
+###1. 下载源代码(需梯子)
 
 - openssh  http://www.openssh.com/portable.html
 - openssl  http://www.openssl.org/source
 - zlib     http://www.zlib.net/
 
+注意: 下面的下载地址可能会由于更新而失效;
 * `wget http://mirrors.nycbug.org/pub/OpenBSD/OpenSSH/portable/openssh-7.1p1.tar.gz`
-* `wget https://www.openssl.org/source/openssl-1.0.2e.tar.gz`
+* `wget https://www.openssl.org/source/openssl-1.0.2f.tar.gz`
 * `wget http://zlib.net/zlib-1.2.8.tar.gz`
 
 ###2. 创建工作目录:

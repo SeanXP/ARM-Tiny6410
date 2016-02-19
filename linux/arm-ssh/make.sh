@@ -5,7 +5,7 @@
 #	> Author:           < Sean Guo >		
 #	> Mail:             < iseanxp+code@gmail.com >		
 #	> Created Time:     < 2015/12/15 >
-#	> Last Changed: 
+#	> Last Changed:     < 2016/02/19 >
 #	> Description:
 #################################################################
 
@@ -21,7 +21,7 @@ mkdir -p $source_dir $compressed_dir $install_dir
 
 # 2. 下载源代码
 wget http://mirrors.nycbug.org/pub/OpenBSD/OpenSSH/portable/openssh-7.1p1.tar.gz -P $compressed_dir
-wget https://www.openssl.org/source/openssl-1.0.2e.tar.gz -P $compressed_dir
+wget https://www.openssl.org/source/openssl-1.0.2f.tar.gz -P $compressed_dir
 wget http://zlib.net/zlib-1.2.8.tar.gz -P $compressed_dir
 
 # 3. 解压
