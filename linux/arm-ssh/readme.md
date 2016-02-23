@@ -77,7 +77,6 @@
 
 * sshd 拷贝到目标板 /usr/local/sbin/ 
 
-
 * 拷贝install/zlib-1.2.3/lib/libz.so.1.2.* 到 arm开发板的/lib/下，并建立软连接:
 	
 		ln -s libz.so.1.2.* libz.so.1
@@ -86,12 +85,53 @@
 注意：动态连接库必须放在/lib/目录下。    
 libz.so.1.2.*是一个动态连接库文件，但是程序调用的时候使用的是libz.so.1这个名称，所以要建立软链接；
 
+
+	# 拷贝openssh
+	arm_dir=$local_dir/arm-rootfs 
+	mkdir -p $arm_dir
+	cd $openssh_dir
+	mkdir -p $arm_dir/usr/local/bin
+	cp scp  sftp  ssh  ssh-add  ssh-agent  ssh-keygen  ssh-keyscan $arm_dir/usr/local/bin
+	mkdir -p $arm_dir/usr/local/etc
+	cp moduli ssh_config sshd_config $arm_dir/usr/local/etc
+	mkdir -p $arm_dir/usr/local/libexec
+	cp sftp-server ssh-keysign $arm_dir/usr/local/libexec
+	mkdir -p $arm_dir/usr/local/sbin
+	cp sshd $arm_dir/usr/local/sbin
+	mkdir -p $arm_dir/var/empty
+	sudo chown root:root $arm_dir/var/empty
+	sudo chmod 755 $arm_dir/var/empty
+	# 拷贝zlib
+	cd $zlib_install_dir
+	mkdir -p $arm_dir/lib
+	cp -r lib/libz.so.1.2.* $arm_dir/lib
+	cd $arm_dir/lib
+	ln -s libz.so.1.2.* libz.so.1
+	ln -s libz.so.1.2.* libz.so
+	# 拷贝openssl
+	cd $openssl_install_dir
+	mkdir -p $arm_dir/usr/bin
+	cp -r bin/* $arm_dir/usr/bin
+	mkdir -p $arm_dir/usr/lib
+	cp -r lib/*.a $arm_dir/usr/lib
+
+####Issue: 
+
+	[root@FriendlyARMvar]# /usr/local/sbin/sshd
+	/var/empty must be owned by root and not group or world-writable.
+
+问题在于/var/empty的权限问题(owner为root且group/others不能有w权限)，解决方案:
+	
+	# chown root:root /var/empty
+	# chmod 755 /var/empty
+	
 ###8. 生成Key文件
 
 	# ssh-keygen -t rsa -f ssh_host_rsa_key -N ""
 	# ssh-keygen -t dsa -f ssh_host_dsa_key -N ""
 	# ssh-keygen -t ecdsa -f ssh_host_ecdsa_key -N ""
 	# ssh-keygen -t ed25519 -f ssh_host_ed25519_key -N ""
+	# chmod 600 ssh_host_*_key
 
 将生成的 `ssh_host_*_key`这4个文件copy到目标板的 /usr/local/etc/目录下.
 并配置权限为600;
@@ -130,5 +170,4 @@ libz.so.1.2.*是一个动态连接库文件，但是程序调用的时候使用�
 
 
 ----
-
 

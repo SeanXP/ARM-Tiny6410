@@ -76,6 +76,9 @@ cp sftp-server ssh-keysign $arm_dir/usr/local/libexec
 mkdir -p $arm_dir/usr/local/sbin
 cp sshd $arm_dir/usr/local/sbin
 mkdir -p $arm_dir/var/empty
+sudo chown root:root $arm_dir/var/empty
+sudo chmod 755 $arm_dir/var/empty
+
 # 5.2 拷贝zlib
 cd $zlib_install_dir
 mkdir -p $arm_dir/lib
