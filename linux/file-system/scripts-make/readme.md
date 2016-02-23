@@ -16,4 +16,11 @@ arm-linux-gcc: arm-2014.05-29-arm-none-linux-gnueabi-i686-pc-linux-gnu.tar.bz2
 经过4个脚本，生成的rootfs可以直接使用(NFS挂载);   
 参考: [NFS挂载文件系统](https://github.com/SeanXP/ARM-Tiny6410/tree/master/linux#file-system---文件系统)
 
-提供生成的最小文件系统: rootfs.tar.bz2
+提供生成的最小文件系统: rootfs.tar.xz:
+
+        $ sudo tar xJvf rootfs.tar.xz
+
+拷贝rootfs到nfs共享目录:
+
+        $ sudo mv rootfs/ /var/nfsroot/
+

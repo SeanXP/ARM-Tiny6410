@@ -9,8 +9,8 @@ prevlevel=N
 umask 022
 # 导出为环境变量
 export PATH runlevel prevlevel
-# 配置eth0的IP地址
-ifconfig eth0 10.42.1.70
+# 配置eth0的IP地址(这里不建议配置IP, 硬编码配置IP会导致其他网络环境无法挂载NFS文件系统)
+# ifconfig eth0 XX.XX.XX.XX
 # 文件/etc/fstab 中指明的文件挂载到对应的挂载点上
 mount -a
 # 当有热插拔事件产生时， 内核就会调用位于/sbin目录的mdev; 利用相关信息创建设备节点;
