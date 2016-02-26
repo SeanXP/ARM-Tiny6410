@@ -8,6 +8,18 @@ mjpg-streamer ：目录下提供了 的执行程序和各个输入输出设备�
 uvc-streamer  ： 目录下提供了  uvc-streamer的可执行目录
 mjpeg-client：：  分别有 linux和windows 的客户端
 
+## 脚本自动交叉编译
+
+    ./make.sh
+
+最后交叉编译的内容在`libjpeg_build/install`, `mjpg-streamer/mjpg-streamer`, 将其拷贝到对应ARM路径下:
+
+    libjpeg_build/install/usr/local/ ----> (ARM) /usr/local/
+    mjpg-streamer/mjpg-streamer      ----> (ARM) 任意路径
+
+直接执行mjpg-streamer/mjpg-streamer/start.sh即可;
+
+
 ##ubuntu 编译：
 
 	#!/bin/bash
@@ -53,3 +65,9 @@ CC=gcc  修改为  CC=arm-linux-gcc
 并在jpeg_utils.lo的规则下添加$(LFLAGS)
 
 然后编译;
+
+-----
+
+参考:    
+http://www.ridgesolutions.ie/index.php/2013/05/15/cross-compiling-libjpeg-for-linux-on-arm/      
+http://blog.sina.com.cn/s/blog_64d0b03c0101crzc.html    
