@@ -7,7 +7,7 @@ Tiny6410 - Arm Linux
 
 假设拿到的Tiny6410开发板没有提前下载任何程序，包括Bootloader.
 
-###Bootloader - Superboot
+##Bootloader - Superboot
 
 Superboot是FriendlyARM公司提供的Bootloader(非开源)，提供USB下载功能。   
 只要烧写了Superboot, 就可以通过USB下载内核、文件系统到板子的Flash中。
@@ -23,8 +23,8 @@ Windows 7，使用FriendlyARM提供的SD卡烧录工具**SD-Flasher.exe**:
 
 1. SD卡连接Window 7（提前备份SD卡数据，下面的操作会格式化SD卡）
 2. 以管理员身份运行SD-Flasher.exe
-3. 点击"Scan"按钮，选择找到的SD卡
-4. 点击"ReLayout!"按钮，对SD卡进行分区
+3. 点击"Scan"按钮，选择找到的SD卡(非管理员权限，无法扫描到SD卡)
+4. 点击"ReLayout!"按钮，对SD卡进行分区（小容量SD卡无法分区，应更换大容量SD卡）
 	* FAT32
 	* 无格式区, SD卡最后的130M空间;    
 	
@@ -61,9 +61,13 @@ Windows 7，使用FriendlyARM提供的SD卡烧录工具**SD-Flasher.exe**:
 
 要使用Superboot的USB下载功能，需要：
 
-1. Windows XP (Window 7 不兼容）
-2. USB驱动(FriendlyARM USB Download Driver Setup_20090421)
-3. DNW下载软件
+1. Windows XP / Window 7
+2. USB驱动-[tiny6410 适用于win7 64bit的dnw 的USB下载驱动](http://download.csdn.net/detail/commshare/4865787)
+	* 解压得到win7-64-FriendlyArm/, 解压secbulk64.zip
+	* 运行dseo13b.exe, Enable Test Mode
+	* Sign a System File, 选择secbulk64/inf64/secbulk.sys
+	* USB线连接FriendlyARM Tiny6410 & PC, 选择驱动位置为secbulk64/inf64, 安装驱动;
+3. DWN下载软件-[DWN.exe](http://download.csdn.net/detail/masonlm/584259)
 
 下载步骤（通过SD卡的Superboot下载Superboot/Kernel/File System到Nand Flash)：
 
@@ -80,8 +84,9 @@ Windows 7，使用FriendlyARM提供的SD卡烧录工具**SD-Flasher.exe**:
 
 另外，还可以通过[d]选项，直接下载程序(例如之前交叉编译好的leds.bin, key.bin等）到内存起始地址，并开始运行程序。
 
+例子: 交叉编译ARM-Tiny6410/no-os/led/1.leds_s/，得到led.bin，通过dwn.exe下载到板子并运行;
 
-###Bootloader - U-boot
+##Bootloader - U-boot
 
 使用Tekkaman Ninja移植的[U-boot-2011.06](https://github.com/tekkamanninja/u-boot-2011.06-for-MINI6410).
 
@@ -218,7 +223,7 @@ Linux Kernel: 使用FriendlyARM提供的linux-2.6.38-20140106.tgz。
 	
 ----
 
-###File System - 文件系统
+##File System - 文件系统
 
 1. 制作文件系统     
 	* 参考: 韦东山 - 17章节    
