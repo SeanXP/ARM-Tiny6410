@@ -5,6 +5,18 @@ Linux 2.6.38 for Tiny6410
 
 Kernel: [Linux 2.6.38](ftp://ftp.kernel.org/pub/linux/kernel/v2.6/linux-2.6.38.tar.bz2)
 
+
+##脚本快速编译内核
+    
+    $ git clone https://github.com/SeanXP/ARM-Tiny6410.git
+    $ wget ftp://ftp.kernel.org/pub/linux/kernel/v2.6/linux-2.6.38.tar.bz2
+    $ tar xjvf linux-2.6.38.tar.bz2 -C ARM-Tiny6410/linux/kernel/
+    $ cd ARM-Tiny6410/linux/kernel/
+    $ ./0_nandflash.sh
+    $ ./1_dm9000_nfs.sh
+    $ cd linux-2.6.38/
+    $ make ARCH=arm
+
 ----
 
 1. 下载linux-2.6.38的源码
@@ -16,8 +28,10 @@ Kernel: [Linux 2.6.38](ftp://ftp.kernel.org/pub/linux/kernel/v2.6/linux-2.6.38.t
 		$ cd linux-2.6.38
 		$ vi Makefile
 	
-	修改ARCH            ?= arm
-		
+	修改为ARCH            ?= arm
+	
+	注意: 其实也可以不修改Makefile中的ARCH，而在`$ make ARCH=arm`中指出;
+	
 		$ cp arch/arm/configs/s3c6400_defconfig .config
 		$ make menuconfig
 
@@ -26,7 +40,7 @@ Kernel: [Linux 2.6.38](ftp://ftp.kernel.org/pub/linux/kernel/v2.6/linux-2.6.38.t
 
 3. 编译
 
-		$ make
+		$ make ARCH=arm
 
 	编译后得到vmlinux, 将其制作为uImage, 并通过uboot下载到ARM		
 	
