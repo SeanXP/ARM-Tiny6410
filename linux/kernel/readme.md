@@ -63,7 +63,7 @@ Kernel: [Linux 2.6.38](ftp://ftp.kernel.org/pub/linux/kernel/v2.6/linux-2.6.38.t
              },
          };
 	
-    拷贝FriendlyARM提供的NAND相关代码, 参考: [http://www.arm9home.net/read.php?tid-14196.html]
+    拷贝FriendlyARM提供的NAND相关代码, 参考: [http://www.arm9home.net/read.php?tid-14196.html]    
     这里提供脚本: **0_nandflash.sh**
 
     编译内核并加载，可以看到内核输出:
@@ -88,6 +88,39 @@ Kernel: [Linux 2.6.38](ftp://ftp.kernel.org/pub/linux/kernel/v2.6/linux-2.6.38.t
     4 * 128 * 1024 = 8 * 16 ^ 4, 配置无误, Uboot预留空间512K, Kernel预留空间5M足够;
 
     这次Kernel panic的原因是没有根目录, 这也是接下来的移植目标;
+
+5. 移植dm9000驱动
+	* 修改include/linux/dm9000.h, 在struct dm9000_plat_data定义中添加变量: unsigned char    param_addr[6];
+	* 修改drivers/net/dm9000.c
+	* 修改include/linux/dm9000.h
+
+	提供脚本：`1_dm9000_nfs.sh`     
+	修改后, make menuconfig添加DM9000相关配置，编译内核，ARM板子上电，修改uboot的bootargs为:
+	
+		MINI6410 # setenv bootargs "root=/dev/nfs console=ttySAC0,115200 init=/linuxrc nfsroot=10.42.1.100:/var/nfsroot/rootfs ip=10.42.1.70:10.42.1.100:10.42.1.254:255.255.255.0:tiny6410:eth0:off"
+
+	使用uboot加载编译好的内核，启动，输出：
+
+		dm9000 Ethernet Driver, V1.31
+		eth0: dm9000a at d081c000,d0c00004 IRQ 108 MAC: 08:08:10:12:10:27 (chip)
+		......
+		......
+		VFS: Cannot open root device "nfs" or unknown-block(0,255)
+		
+6. 配置NFS文件系统支持
+
+	`$ make menuconfig`
+	
+		File systems  ---> 
+			Network File Systems  ---> 
+				<*>   NFS client support  
+				[*]   Root file system on NFS   这个一点要选
+				<*>   NFS server support
+	重新编译内核，下载到ARM板子，启动板子，**内核启动成功**
+	
+		Please press Enter to activate this console.
+		[root@tiny6410]#
+
 
 ----
 
