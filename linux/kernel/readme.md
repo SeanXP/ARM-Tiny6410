@@ -16,8 +16,14 @@ Kernel: [Linux 2.6.38](ftp://ftp.kernel.org/pub/linux/kernel/v2.6/linux-2.6.38.t
     $ ./1_dm9000_nfs.sh
     $ cd linux-2.6.38/
     $ make ARCH=arm
+        
+    $ cp vmlinux ../
+    $ cd ..
+    $ ./make_uImage.sh
 
 ----
+
+##Linux Kernel for ARM 配置&编译
 
 1. 下载linux-2.6.38的源码
 
@@ -28,24 +34,28 @@ Kernel: [Linux 2.6.38](ftp://ftp.kernel.org/pub/linux/kernel/v2.6/linux-2.6.38.t
 		$ cd linux-2.6.38
 		$ vi Makefile
 	
-	修改为ARCH            ?= arm
+	修改为`ARCH            ?= arm`
 	
-	注意: 其实也可以不修改Makefile中的ARCH，而在`$ make ARCH=arm`中指出;
+	注意: 也可以不修改Makefile中的ARCH，而在`$ make ARCH=arm`中指出;
 	
 		$ cp arch/arm/configs/s3c6400_defconfig .config
 		$ make menuconfig
 
-	General setup->Cross-compiler tool prefix: arm-linux-       
-	System Type->[*] MINI6410   选上，其他的可以去掉
+			General setup->
+				Cross-compiler tool prefix: 
+					arm-linux-       
+			System Type->
+				[*] MINI6410   选上，其他的可以去掉
 
 3. 编译
 
 		$ make ARCH=arm
+		$ cp vmlinux ../
+		$ cd ..
+		$ ./make_uImage.sh
 
-	编译后得到vmlinux, 将其制作为uImage, 并通过uboot下载到ARM		
+	编译后得到vmlinux, 将其[制作为uImage	, 并通过uboot下载到ARM；](https://github.com/SeanXP/ARM-Tiny6410/tree/master/linux#bootloader---u-boot)
 	
-	[https://github.com/SeanXP/ARM-Tiny6410/tree/master/linux#bootloader---u-boot]		
-
 	配置bootargs:
 	
 		MINI6410 # setenv bootargs "console=ttySAC0,115200"
@@ -135,6 +145,20 @@ Kernel: [Linux 2.6.38](ftp://ftp.kernel.org/pub/linux/kernel/v2.6/linux-2.6.38.t
 		Please press Enter to activate this console.
 		[root@tiny6410]#
 
+7. LCD&触摸屏驱动移植
+
+	参考: http://www.arm9home.net/read.php?tid=14261
+	
+	这里因为用不到，没有移植;
+	
+8. USB设备驱动移植
+
+	参考: http://www.arm9home.net/read.php?tid=14462
+	
+	* arch/arm/mach-s3c64xx/mach-mini6410.c, 添加`void s3c_otg_phy_config(int enable)`函数定义,、头文件`#include <plat/regs-usb-hsotg-phy.h>`(刚添加的函数中的宏定义S3C_PHYPWR需要此头文件)、头文件`#include <linux/delay.h>`(udelay()函数需要);
+	* 修改drivers/usb/host/ohci-s3c2410.c
+	* make menuconfig添加USB的相关配置
+	
 
 ----
 
