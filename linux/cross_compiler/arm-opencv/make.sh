@@ -33,7 +33,6 @@ cd $source_dir
 # How to quickly compile FFmpeg with libx264 (x264, H.264): https://trac.ffmpeg.org/wiki/How%20to%20quickly%20compile%20FFmpeg%20with%20libx264%20(x264,%20H.264)
 git clone git://github.com/yasm/yasm.git
 git clone git://git.videolan.org/x264.git
-#git clone http://source.ffmpeg.org/git/ffmpeg.git
 git clone https://github.com/FFmpeg/FFmpeg.git
 
 # 3. 解压
@@ -81,34 +80,30 @@ make install
 # 4.3 compile libpng
 cd $libpng_dir
 ./configure --host=arm-linux --prefix=$libpng_intall_dir --enable-shared --enable-static CFLAGS="-I$zlib_install_dir/include" LDFLAGS="-L$zlib_install_dir/lib"
-#./configure --host=arm-linux --prefix=/home/hit413/Code/arm-opencv/install/libpng --enable-shared --enable-static CFLAGS="-I/home/hit413/Code/arm-opencv/install/zlib/include" LDFLAGS="-L/home/hit413/Code/arm-opencv/install/zlib/lib"
 make
 make install
 
 # 4.4 compile libyasm
 cd $libyasm_dir
 ./autogen.sh
-./configure --host=arm-linux --prefix=libyasm_install_dir
-#./configure --host=arm-linux --prefix=/home/hit413/Code/arm-opencv/install/libyasm
+./configure --host=arm-linux --prefix=$libyasm_install_dir
 make
 make install
 
 # 4.5  compile libx264
 cd $libx264_dir
-CC=arm-linux-gcc ./configure --host=arm-linux --prefix=libx264_install_dir --enable-shared --enable-static --disable-asm
-#CC=arm-linux-gcc ./configure --host=arm-linux --prefix=/home/hit413/Code/arm-opencv/install/libx264 --enable-shared --enable-static --disable-asm
+CC=arm-linux-gcc ./configure --host=arm-linux --prefix=$libx264_install_dir --enable-shared --enable-static --disable-asm
 make
 make install
 
 # 4.6 compile libxvid
 cd $libxvid_dir/build/generic
 ./configure --host=arm-linux --prefix=$libxvid_install_dir --disable-assembly
-#./configure --host=arm-linux --prefix=/home/hit413/Code/arm-opencv/install/libxvid --disable-assembly
 make
 make install
 
 # 4.7 compile ffmpeg
 cd $ffmpeg_dir
-CC=arm-linux-gcc ./configure --host=arm-linux --arch=arm --prefix=/home/hit413/Code/arm-opencv/install/ffmpeg --enable-shared --disable-static --enable-gpl --enable-cross-compile --disable-stripping --enable-libx264 --enable-libxvid --enable-swscale --extra-cflags="-I/home/hit413/Code/arm-opencv/install/libx264/include" --extra-ldflags="-L/home/hit413/Code/arm-opencv/install/libx264/lib"
+CC=arm-linux-gcc ./configure --host=arm-linux --arch=arm --prefix=$ffmpeg_install_dir --enable-shared --disable-static --enable-gpl --enable-cross-compile --disable-stripping --enable-libx264 --enable-libxvid --enable-swscale --extra-cflags="-I/home/hit413/Code/arm-opencv/install/libx264/include" --extra-ldflags="-L/home/hit413/Code/arm-opencv/install/libx264/lib"
 make
 make install
