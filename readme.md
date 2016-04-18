@@ -1,4 +1,4 @@
-FriendlyARM - Tiny6410
+[FriendlyARM - Tiny6410](http://www.arm9.net/tiny6410.asp)
 ====
 
 ##Hardware Info
@@ -19,8 +19,6 @@ FriendlyARM - Tiny6410
 | I2C-EEPROM | ATMLH346 (Xi2cSCL0, Xi2cSDA0) |
 | USB Device | miniUSB, USB 2.0 |
 | USB Host | USB A, USB 2.0 hub(x3) |
-
-[FriendlyARM - Tiny6410](http://www.arm9.net/tiny6410.asp)
 
 ##Folder Description
 
