@@ -11,7 +11,7 @@ ARM-S3C6410 Bare-Metal Program
 
 | No. | folder | description |
 | :-: | :----: | :---------: |
-| 0 | arm-linux-gcc | gcc工具链使用 |
+| 0 | arm-linux-gcc | [gcc工具链使用](arm-linux-gcc/Makefile) |
 | 1 | led | LED灯 |
 | 2 | button | 按键 |
 | 3 | clock | 时钟 |
