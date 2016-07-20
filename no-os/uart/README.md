@@ -180,7 +180,7 @@ The baud-rate generator can be clocked by PCLK, EXT_UCLK0 or EXT_UCLK1.
 ----
 后记：   
 `$ cp -r xxx/dirs/ .`   
-`$ cp -r xxx/dirs .`   
+`$ cp -r xxx/dirs/. .`   
 这两行命令不一样啊！    
 手抖多敲了一个'/'啊！   
 于是readme.md文件就被覆盖掉了啊！   
